@@ -16,23 +16,23 @@
 
 package com.cyanogenmod.settings.device;
 
-import java.io.IOException;
 import android.content.Context;
-import android.util.AttributeSet;
+
 import android.content.SharedPreferences;
+import android.util.AttributeSet;
 import android.preference.Preference;
 import android.preference.ListPreference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceManager;
 
-public class mDNIeNegative extends ListPreference implements OnPreferenceChangeListener {
+public class mDNIeMode extends ListPreference implements OnPreferenceChangeListener {
 
     private static String FILE = null;
 
-    public mDNIeNegative(Context context, AttributeSet attrs) {
+    public mDNIeMode(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.setOnPreferenceChangeListener(this);
-        FILE = context.getResources().getString(R.string.mdnie_negative_sysfs_file);
+        FILE = context.getResources().getString(R.string.mdnie_mode_sysfs_file);
     }
 
     public static boolean isSupported(String filePath) {
@@ -44,13 +44,13 @@ public class mDNIeNegative extends ListPreference implements OnPreferenceChangeL
      * @param context       The context to read the SharedPreferences from
      */
     public static void restore(Context context) {
-        FILE = context.getResources().getString(R.string.mdnie_negative_sysfs_file);
+        FILE = context.getResources().getString(R.string.mdnie_mode_sysfs_file);
         if (!isSupported(FILE)) {
             return;
         }
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        Utils.writeValue(FILE, sharedPrefs.getString(DisplaySettings.KEY_MDNIE_NEGATIVE, "0"));
+        Utils.writeValue(FILE, sharedPrefs.getString(DisplaySettings.KEY_MDNIE_MODE, "0"));
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {

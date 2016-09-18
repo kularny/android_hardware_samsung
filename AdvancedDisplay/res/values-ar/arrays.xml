@@ -27,6 +27,12 @@
     <item>معرض</item>
     <item>VT</item>
   </string-array>
+  <string-array name="mdnie_mode_entries">
+    <item>ديناميكي (افتراضي)</item>
+    <item>قياسي</item>
+    <item>طبيعي</item>
+    <item>فيلم</item>
+  </string-array>
   <string-array name="mdnie_negative_entries">
     <item>عادي</item>
     <item>معكوس</item>

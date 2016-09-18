@@ -16,9 +16,11 @@
 
 package org.cyanogenmod.hardware;
 
+import org.cyanogenmod.hardware.util.FileUtils;
+
 import android.os.SystemProperties;
 
-import org.cyanogenmod.internal.util.FileUtils;
+import java.io.File;
 
 /**
  * Sunlight Readability Enhancement support, aka Facemelt Mode.
@@ -28,8 +30,7 @@ import org.cyanogenmod.internal.util.FileUtils;
  * support.
  */
 public class SunlightEnhancement {
-
-    private static final String FILE_SRE = "/sys/class/mdnie/mdnie/outdoor";
+    private static final String sOutdoorModePath = "/sys/class/mdnie/mdnie/outdoor";
 
     /**
      * Whether device supports SRE
@@ -37,8 +38,7 @@ public class SunlightEnhancement {
      * @return boolean Supported devices must return always true
      */
     public static boolean isSupported() {
-        return FileUtils.isFileWritable(FILE_SRE) &&
-                FileUtils.isFileReadable(FILE_SRE);
+        return new File(sOutdoorModePath).exists();
     }
 
     /**
@@ -48,7 +48,10 @@ public class SunlightEnhancement {
      * the operation failed while reading the status; true in any other case.
      */
     public static boolean isEnabled() {
-        return "1".equals(FileUtils.readOneLine(FILE_SRE));
+        String line = FileUtils.readOneLine(sOutdoorModePath);
+        if (line == null)
+            return false;
+        return line.equals("1");
     }
 
     /**
@@ -59,7 +62,7 @@ public class SunlightEnhancement {
      * failed; true in any other case.
      */
     public static boolean setEnabled(boolean status) {
-        return FileUtils.writeLine(FILE_SRE, status ? "1" : "0");
+        return FileUtils.writeLine(sOutdoorModePath, status ? "1" : "0");
     }
 
     /**
